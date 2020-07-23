@@ -71,7 +71,7 @@ namespace EvraAutomatedTests
             }
         }
 
-        public void submitSearch(IWebDriver driver)
+        public void populateSearch(IWebDriver driver)
         {
             if (isSearchPageLoaded(driver))
             {
@@ -115,13 +115,6 @@ namespace EvraAutomatedTests
                 {
                     IWebElement occupancyInput = driver.FindElement(By.XPath("//*[@name='occupancy']"));
                     occupancyInput.SendKeys("80");
-                }
-
-                //submit form
-                if (ElementIdExists(driver, "introjsRunValuationButton"))
-                {
-                    IWebElement submitButton = driver.FindElement(By.Id("introjsRunValuationButton"));
-                    submitButton.Click();
                 }
             }
             else
@@ -182,12 +175,20 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+        public void submitValuation(IWebDriver driver)
+        {
+            if (ElementIdExists(driver, "introjsRunValuationButton"))
+            {
+                IWebElement submitButton = driver.FindElement(By.Id("introjsRunValuationButton"));
+                submitButton.Click();
+            }
+        }
 
         public void endToEnd(IWebDriver driver)
         {
             loadLoginPage(driver);
             sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
-            submitSearch(driver);
+            populateSearch(driver);
         }
     }
 }
