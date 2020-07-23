@@ -45,7 +45,7 @@ namespace EvraAutomatedTests
             driver.Manage().Window.Maximize();
         }
 
-        public void sumbitLoginDetails(IWebDriver driver)
+        public void sumbitLoginDetails(IWebDriver driver, string user, string password)
         {
             if (isLoginPageLoaded(driver))
             {
@@ -54,14 +54,14 @@ namespace EvraAutomatedTests
                 if (ElementIdExists(driver, "email"))
                 {
                     IWebElement userTextBox = driver.FindElement(By.Id("email"));
-                    userTextBox.SendKeys("qaskillschallenge@geophy.com");
+                    userTextBox.SendKeys(user);
                 }
                 //find and populate password by id
                 //make sure element exists first
                 if (ElementIdExists(driver, "password"))
                 {
                     IWebElement passwordTextBox = driver.FindElement(By.Id("password"));
-                    passwordTextBox.SendKeys("qaskillschallenge@geophy.com");
+                    passwordTextBox.SendKeys(password);
                     passwordTextBox.Submit();
                 }
             }
@@ -186,7 +186,7 @@ namespace EvraAutomatedTests
         public void endToEnd(IWebDriver driver)
         {
             loadLoginPage(driver);
-            sumbitLoginDetails(driver);
+            sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
             submitSearch(driver);
         }
     }
