@@ -39,7 +39,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver);
@@ -86,7 +86,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             IWebDriver driver = new FirefoxDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver);
@@ -109,13 +109,9 @@ namespace UnitTests
         public void IeLoginTest()
         {
             Boolean pass = false;
-            InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-            ieoptions.IgnoreZoomLevel = true;
-            ieoptions.EnsureCleanSession = true;
-            ieoptions.BrowserCommandLineArguments = "-private";
+            InternetExplorerOptions ieoptions = getIeOptions();
             IWebDriver driver = new InternetExplorerDriver(ieoptions);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            driver.Manage().Cookies.DeleteAllCookies();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
             Program program = new Program();
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver);
@@ -131,6 +127,16 @@ namespace UnitTests
             }
             driver.Close();
             Assert.IsTrue(pass);
+        }
+
+        public InternetExplorerOptions getIeOptions()
+        {
+            InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+            ieoptions.IgnoreZoomLevel = true;
+            ieoptions.EnsureCleanSession = true;
+            //ieoptions.BrowserCommandLineArguments = "-private";
+            //driver.Manage().Cookies.DeleteAllCookies();
+            return ieoptions;
         }
     }
 }
