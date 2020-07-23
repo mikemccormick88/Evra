@@ -67,6 +67,7 @@
     <Compile Include="explorerTests.cs" />
     <Compile Include="firefoxTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="crossBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evra\Evra.csproj">

@@ -3,14 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
 
 namespace UnitTests
 {
     [TestClass]
     public class firefoxTests
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\FailedTests\\";
+        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
         [TestMethod]
         public void fireFoxLoginTest()
         {
@@ -34,8 +33,10 @@ namespace UnitTests
             {
                 //save screenshot with name of current failing test
                 string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
                 Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                image.SaveAsFile(fileDir + filename + ".png", ScreenshotImageFormat.Png);
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
             driver.Close();
             Assert.IsTrue(pass);
@@ -63,8 +64,10 @@ namespace UnitTests
             {
                 //save screenshot with name of current failing test
                 string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
                 Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                image.SaveAsFile(fileDir + filename + ".png", ScreenshotImageFormat.Png);
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
             driver.Close();
             Assert.IsTrue(pass);

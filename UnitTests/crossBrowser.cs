@@ -2,32 +2,32 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+
 
 namespace UnitTests
 {
     [TestClass]
-    public class chromeTests
+    public class crossBrowser
     {
         string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
         [TestMethod]
-        public void chromeLoginTest()
+        public void LoginCheckEmailElementExists()
         {
             //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            IWebDriver driver = setUpDriver();
             Program program = new Program();
             program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
 
             //check test passes
-            if (program.isSearchPageLoaded(driver))
+            if (program.ElementIdExists(driver, "email"))
             {
-                //test passes if search page loads successfully
                 pass = true;
             }
-            //take screenshot if search page failed to load
+
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -42,24 +42,20 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void chromeLoginInvalidPassword()
+        public void LoginCheckPasswordElementExists()
         {
             //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            IWebDriver driver = setUpDriver();
             Program program = new Program();
             program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "Qaskillschallenge@geophy.com");
 
             //check test passes
-            if (!(program.isSearchPageLoaded(driver)))
+            if (program.ElementIdExists(driver, "password"))
             {
-                //test passes if search page fails to load
                 pass = true;
             }
 
-            //take screenshot if search page loads successfully
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -74,23 +70,48 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void chromeSubmitValuationTest()
+        public void LoginCheckLogInButtonExists()
         {
             //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+            IWebDriver driver = setUpDriver();
             Program program = new Program();
-            program.endToEnd(driver);
+            program.loadLoginPage(driver);
 
             //check test passes
-            if (program.isResultsPageLoaded(driver))
+            if (program.ElementXpathExists(driver, "//*[@class='button button--primary']"))
             {
-                //test passes if results page loadeds successfully
                 pass = true;
             }
 
-            //take screenshot if results page failed to load
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
+            driver.Close();
+            Assert.IsTrue(pass);
+        }
+        
+        [TestMethod]
+        public void LoginCheckSignUpButtonExists()
+        {
+            //set up test
+            Boolean pass = false;
+            IWebDriver driver = setUpDriver();
+            Program program = new Program();
+            program.loadLoginPage(driver);
+
+            //check test passes
+            if (program.ElementXpathExists(driver, "//*[@class='button button--secondary']"))
+            {
+                pass = true;
+            }
+
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -105,75 +126,20 @@ namespace UnitTests
         }
 
         [TestMethod]
-        public void chromeNumberOfUnitsInputTest()
+        public void LoginCheckPasswordResetLinkExists()
         {
             //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            IWebDriver driver = setUpDriver();
             Program program = new Program();
             program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
-            if (program.ElementXpathExists(driver, "//*[@name='number_of_units']"))
-            {
-                IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
-                numberOfUnitsInput.SendKeys(Keys.ArrowUp);
-                string text = numberOfUnitsInput.GetAttribute("value");
-
-                //check test passes
-                if (text == "1")
-                {
-                    //test passes if text box=1
-                    pass = true;
-                }
-                else
-                {
-                    pass = false;
-                }
-
-                //take screenshot if text box value was not 1
-                if (pass == false)
-                {
-                    //save screenshot with name of current failing test
-                    string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                    string folder = this.GetType().Name;
-                    Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                    System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                    image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
-                }
-                driver.Close();
-                Assert.IsTrue(pass);
-            }
-        }
-
-        public void chromeDisableValuationButton()
-        {
-            //set up test
-            Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-            Program program = new Program();
-            program.loadLoginPage(driver);
-            program.populateSearch(driver);
-            if (program.ElementIdExists(driver, "noi"))
-            {
-                IWebElement noiInput = driver.FindElement(By.Id("noi"));
-                for (int i = 0; i< 7; i++)
-                {
-                    noiInput.SendKeys(Keys.Backspace);
-                    i += 1;
-                }
-            }
 
             //check test passes
-            if (program.ElementIdExists(driver, "introjsRunValuationButton"))
+            if (program.ElementLinkTextExists(driver, "Forgot password? Click here to reset"))
             {
-                IWebElement submitButton = driver.FindElement(By.Id("introjsRunValuationButton"));
-                //check button is disabled here
-                //pass=true;
+                pass = true;
             }
 
-            //take screenshot if valuation button is enabled
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -185,6 +151,48 @@ namespace UnitTests
             }
             driver.Close();
             Assert.IsTrue(pass);
+        }
+
+        [TestMethod]
+        public void LoginCheckSignUpLinkExists()
+        {
+            //set up test
+            Boolean pass = false;
+            IWebDriver driver = setUpDriver();
+            Program program = new Program();
+            program.loadLoginPage(driver);
+
+            //check test passes
+            if (program.ElementLinkTextExists(driver, "Don't have an acount yet? Sign up here"))
+            {
+                pass = true;
+            }
+
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
+            driver.Close();
+            Assert.IsTrue(pass);
+        }
+
+        public IWebDriver setUpDriver()
+        {
+            IWebDriver chromeDriver = new ChromeDriver();
+            chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            return chromeDriver;
+            //IWebDriver firefoxDriver = new FirefoxDriver();
+            //InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+            //ieoptions.IgnoreZoomLevel = true;
+            //ieoptions.EnsureCleanSession = true;
+            //IWebDriver ieDriver = new InternetExplorerDriver(ieoptions);
+            //ieDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            //return ieDriver;
         }
     }
 }

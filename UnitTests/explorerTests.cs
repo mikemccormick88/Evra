@@ -9,7 +9,7 @@ namespace UnitTests
     [TestClass]
     public class explorerTests
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\FailedTests\\";
+        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
         [TestMethod]
         public void IeLoginTest()
         {
@@ -34,8 +34,10 @@ namespace UnitTests
             {
                 //save screenshot with name of current failing test
                 string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
                 Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                image.SaveAsFile(fileDir + filename + ".png", ScreenshotImageFormat.Png);
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
             driver.Close();
             Assert.IsTrue(pass);
@@ -44,7 +46,9 @@ namespace UnitTests
         public InternetExplorerOptions getIeOptions()
         {
             InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+            //causes exception when zoom settings are inconsistent
             ieoptions.IgnoreZoomLevel = true;
+            //stop login page being redirected to search page in explorer
             ieoptions.EnsureCleanSession = true;
             //ieoptions.BrowserCommandLineArguments = "-private";
             //driver.Manage().Cookies.DeleteAllCookies();

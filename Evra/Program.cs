@@ -164,9 +164,21 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+
         public Boolean ElementXpathExists(IWebDriver driver, string path)
         {
             if (driver.FindElements(By.XPath(path)).Count() != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public Boolean ElementLinkTextExists(IWebDriver driver, string link)
+        {
+            if (driver.FindElements(By.LinkText(link)).Count() != 0)
             {
                 return true;
             }
