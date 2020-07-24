@@ -73,8 +73,8 @@ namespace EvraAutomatedTests
 
         public void populateSearch(IWebDriver driver)
         {
-            if (isSearchPageLoaded(driver))
-            {
+            if (driver.Url == "https://evra.geophy.com/login")
+                {
                 //populate address
                 if (ElementIdExists(driver, "address_input"))
                 {
@@ -126,28 +126,8 @@ namespace EvraAutomatedTests
         public Boolean isLoginPageLoaded(IWebDriver driver)
         {
             Boolean isLoaded = false;
-            if (driver.FindElements(By.XPath("//*[@id='email']")).Count() != 0)
-            {
-                isLoaded = true;
-            }
-            return isLoaded;
-        }
-
-        public Boolean isSearchPageLoaded(IWebDriver driver)
-        {
-            Boolean isLoaded=false;
-            if (driver.FindElements(By.Id("introjsAddressInputForm")).Count() != 0)
+            if (driver.Url == "https://evra.geophy.com/login")
                 {
-                    isLoaded = true;
-                }
-            return isLoaded;
-        }
-
-        public Boolean isResultsPageLoaded(IWebDriver driver)
-        {
-            Boolean isLoaded = false;
-            if (driver.FindElements(By.Id("property-section")).Count() != 0)
-            {
                 isLoaded = true;
             }
             return isLoaded;
@@ -176,6 +156,7 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+
         public Boolean ElementLinkTextExists(IWebDriver driver, string link)
         {
             if (driver.FindElements(By.LinkText(link)).Count() != 0)
@@ -199,6 +180,7 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+
         public void submitValuation(IWebDriver driver)
         {
             if (ElementIdExists(driver, "introjsRunValuationButton"))

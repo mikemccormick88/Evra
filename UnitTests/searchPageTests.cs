@@ -1,33 +1,38 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.IE;
+using NUnit.Framework;
 
 namespace UnitTests
 {
-    [TestClass]
-    public class chromeTests
+    [TestFixture]
+    public class searchPageTests
     {
         string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
-        [TestMethod]
-        public void chromeLoginTest()
+        Program program;
+        IWebDriver driver;
+
+        [OneTimeSetUp]
+        public void Init()
         {
-            //set up test
-            Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            Program program = new Program();
+            driver = setUpDriver();
+            program = new Program();
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
+        }
 
+        [Test]
+        public void isSearchPageLoaded()
+        {
+            Boolean pass = false;
             //check test passes
-            if (program.isSearchPageLoaded(driver))
+            if (driver.Url == "https://evra.geophy.com/search")
             {
-                //test passes if search page loads successfully
                 pass = true;
             }
-            //take screenshot if search page failed to load
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -37,29 +42,18 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void chromeLoginInvalidPassword()
+        [Test]
+        public void isAddressInputLoaded()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
-            Program program = new Program();
-            program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "Qaskillschallenge@geophy.com");
-
             //check test passes
-            if (!(program.isSearchPageLoaded(driver)))
+            if (program.ElementIdExists(driver, "address_input"))
             {
-                //test passes if search page fails to load
                 pass = true;
             }
-
-            //take screenshot if search page loads successfully
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -69,28 +63,18 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void chromeSubmitValuationTest()
+        [Test]
+        public void isNoiInputLoaded()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-            Program program = new Program();
-            program.endToEnd(driver);
-
             //check test passes
-            if (program.isResultsPageLoaded(driver))
+            if (program.ElementIdExists(driver, "noi"))
             {
-                //test passes if results page loadeds successfully
                 pass = true;
             }
-
-            //take screenshot if results page failed to load
             if (pass == false)
             {
                 //save screenshot with name of current failing test
@@ -100,20 +84,76 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void chromeNumberOfUnitsInputTest()
+        [Test]
+        public void isNumberOfUnitsInputLoaded()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            Program program = new Program();
-            program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
+            //check test passes
+            if (program.ElementXpathExists(driver, "//*[@name='number_of_units']"))
+            {
+                pass = true;
+            }
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
+            Assert.IsTrue(pass);
+        }
+
+        [Test]
+        public void isYearBuiltLoaded()
+        {
+            Boolean pass = false;
+            //check test passes
+            if (program.ElementXpathExists(driver, "//*[@name='year_built']"))
+            {
+                pass = true;
+            }
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
+            Assert.IsTrue(pass);
+        }
+
+        [Test]
+        public void isOccupancyInputLoaded()
+        {
+            Boolean pass = false;
+            //check test passes
+            if (program.ElementXpathExists(driver, "//*[@name='occupancy']"))
+            {
+                pass = true;
+            }
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
+            Assert.IsTrue(pass);
+        }
+
+        [Test]
+        public void NumberOfUnitsInputTest()
+        {
+            Boolean pass = false;
             if (program.ElementXpathExists(driver, "//*[@name='number_of_units']"))
             {
                 IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
@@ -141,24 +181,18 @@ namespace UnitTests
                     System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                     image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
                 }
-                driver.Close();
                 Assert.IsTrue(pass);
             }
         }
 
-        public void chromeDisableValuationButton()
+        [Test]
+        public void DisableValuationButtonWithoutNoiInput()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-            Program program = new Program();
-            program.loadLoginPage(driver);
-            program.populateSearch(driver);
             if (program.ElementIdExists(driver, "noi"))
             {
                 IWebElement noiInput = driver.FindElement(By.Id("noi"));
-                for (int i = 0; i< 7; i++)
+                for (int i = 0; i < 7; i++)
                 {
                     noiInput.SendKeys(Keys.Backspace);
                     i += 1;
@@ -183,8 +217,27 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
+        }
+
+        [OneTimeTearDown]
+        public void Close()
+        {
+            driver.Close();
+        }
+
+        public IWebDriver setUpDriver()
+        {
+            IWebDriver chromeDriver = new ChromeDriver();
+            chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            return chromeDriver;
+            //IWebDriver firefoxDriver = new FirefoxDriver();
+            //InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+            //ieoptions.IgnoreZoomLevel = true;
+            //ieoptions.EnsureCleanSession = true;
+            //IWebDriver ieDriver = new InternetExplorerDriver(ieoptions);
+            //ieDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            //return ieDriver;
         }
     }
 }

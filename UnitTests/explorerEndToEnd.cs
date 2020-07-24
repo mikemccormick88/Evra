@@ -7,7 +7,7 @@ using OpenQA.Selenium.IE;
 namespace UnitTests
 {
     [TestClass]
-    public class explorerTests
+    public class explorerEndToEnd
     {
         string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
         [TestMethod]
@@ -15,15 +15,22 @@ namespace UnitTests
         {
             //set up test
             Boolean pass = false;
-            InternetExplorerOptions ieoptions = getIeOptions();
+
+            //set up driver and options
+            InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+            //causes exception when zoom settings are inconsistent
+            ieoptions.IgnoreZoomLevel = true;
+            //stop login page being redirected to search page in explorer
+            ieoptions.EnsureCleanSession = true;
+            //ieoptions.BrowserCommandLineArguments = "-private";
+            //driver.Manage().Cookies.DeleteAllCookies();
             IWebDriver driver = new InternetExplorerDriver(ieoptions);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+
             Program program = new Program();
-            program.loadLoginPage(driver);
-            program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
+            program.endToEnd(driver);
 
             //check test passes
-            if (program.isSearchPageLoaded(driver))
+            if (driver.Url == "https://evra.geophy.com/search")
             {
                 //test passes if search page loads successfully
                 pass = true;
@@ -41,18 +48,6 @@ namespace UnitTests
             }
             driver.Close();
             Assert.IsTrue(pass);
-        }
-
-        public InternetExplorerOptions getIeOptions()
-        {
-            InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-            //causes exception when zoom settings are inconsistent
-            ieoptions.IgnoreZoomLevel = true;
-            //stop login page being redirected to search page in explorer
-            ieoptions.EnsureCleanSession = true;
-            //ieoptions.BrowserCommandLineArguments = "-private";
-            //driver.Manage().Cookies.DeleteAllCookies();
-            return ieoptions;
         }
     }
 }

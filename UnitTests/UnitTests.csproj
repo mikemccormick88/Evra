@@ -68,11 +68,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="chromeTests.cs" />
-    <Compile Include="explorerTests.cs" />
-    <Compile Include="firefoxTests.cs" />
+    <Compile Include="chromeEndToEnd.cs" />
+    <Compile Include="explorerEndToEnd.cs" />
+    <Compile Include="firefoxEndToEnd.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NUnit.cs" />
+    <Compile Include="loginPageTests.cs" />
+    <Compile Include="searchPageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Evra\Evra.csproj">
