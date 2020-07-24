@@ -9,9 +9,9 @@ namespace UnitTests
     [TestClass]
     public class explorerEndToEnd
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
+        string fileDir = "C:\\Testing\\Evra\\";
         [TestMethod]
-        public void IeLoginTest()
+        public void IeEndToEndTest()
         {
             //set up test
             Boolean pass = false;
@@ -22,15 +22,16 @@ namespace UnitTests
             ieoptions.IgnoreZoomLevel = true;
             //stop login page being redirected to search page in explorer
             ieoptions.EnsureCleanSession = true;
-            //ieoptions.BrowserCommandLineArguments = "-private";
+            ieoptions.BrowserCommandLineArguments = "-private";
             //driver.Manage().Cookies.DeleteAllCookies();
             IWebDriver driver = new InternetExplorerDriver(ieoptions);
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
             Program program = new Program();
             program.endToEnd(driver);
 
             //check test passes
-            if (driver.Url == "https://evra.geophy.com/search")
+            if (program.ElementIdExists(driver, "property-section"))
             {
                 //test passes if search page loads successfully
                 pass = true;

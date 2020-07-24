@@ -11,11 +11,11 @@ namespace EvraAutomatedTests
     {
         static void Main(string[] args)
         {
-            //main program allows user to submit valuations in chome, ff or ie
+            //main program allows user to submit valuations in chrome, ff or ie
             Program Program = new Program();
-            Console.WriteLine("g for google, f for firefox, i for ie, esc to quit");
+            Console.WriteLine("c for chrome, f for firefox, i for ie, esc to quit");
             string go = Console.ReadLine();
-            if (go == "g")
+            if (go == "c")
             {
                 IWebDriver driver = new ChromeDriver();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -67,59 +67,51 @@ namespace EvraAutomatedTests
             }
             else
             {
-                Console.ReadLine();
             }
         }
 
         public void populateSearch(IWebDriver driver)
         {
-            if (driver.Url == "https://evra.geophy.com/login")
-                {
-                //populate address
-                if (ElementIdExists(driver, "address_input"))
-                {
-                    IWebElement addressInput = driver.FindElement(By.Id("address_input"));
-                    addressInput.SendKeys("555 N. College Avenue, Tempe, AZ, 85281");
+            //populate address
+            if (ElementIdExists(driver, "address_input"))
+            {
+                IWebElement addressInput = driver.FindElement(By.Id("address_input"));
+                addressInput.SendKeys("555 N. College Avenue, Tempe, AZ, 85281");
 
-                    //select first address matched from dropdown
-                    if (driver.FindElements(By.ClassName("pac-matched")).Count() != 0)
-                    {
-                        addressInput.SendKeys(Keys.ArrowDown);
-                        addressInput.SendKeys(Keys.Return);
-                    }
-                }
-
-                //populate noi
-                if (ElementIdExists(driver, "noi"))
+                //select first address matched from dropdown
+                if (driver.FindElements(By.ClassName("pac-matched")).Count() != 0)
                 {
-                    IWebElement noiInput = driver.FindElement(By.Id("noi"));
-                    noiInput.SendKeys("2000000");
-                }
-
-                //populate number of units
-                if (ElementXpathExists(driver, "//*[@name='number_of_units']"))
-                {
-                    IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
-                    numberOfUnitsInput.SendKeys("200");
-                }
-
-                //populate year built
-                if (ElementXpathExists(driver, "//*[@name='year_built']"))
-                {
-                    IWebElement yearInput = driver.FindElement(By.XPath("//*[@name='year_built']"));
-                    yearInput.SendKeys("2000");
-                }
-
-                //populate occupancy
-                if (ElementXpathExists(driver, "//*[@name='occupancy']"))
-                {
-                    IWebElement occupancyInput = driver.FindElement(By.XPath("//*[@name='occupancy']"));
-                    occupancyInput.SendKeys("80");
+                    addressInput.SendKeys(Keys.ArrowDown);
+                    addressInput.SendKeys(Keys.Return);
                 }
             }
-            else
+
+            //populate noi
+            if (ElementIdExists(driver, "noi"))
             {
-                Console.ReadLine();
+                IWebElement noiInput = driver.FindElement(By.Id("noi"));
+                noiInput.SendKeys("2000000");
+            }
+
+            //populate number of units
+            if (ElementXpathExists(driver, "//*[@name='number_of_units']"))
+            {
+                IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
+                numberOfUnitsInput.SendKeys("200");
+            }
+
+            //populate year built
+            if (ElementXpathExists(driver, "//*[@name='year_built']"))
+            {
+                IWebElement yearInput = driver.FindElement(By.XPath("//*[@name='year_built']"));
+                yearInput.SendKeys("2000");
+            }
+
+            //populate occupancy
+            if (ElementXpathExists(driver, "//*[@name='occupancy']"))
+            {
+                IWebElement occupancyInput = driver.FindElement(By.XPath("//*[@name='occupancy']"));
+                occupancyInput.SendKeys("80");
             }
         }
 
@@ -195,6 +187,7 @@ namespace EvraAutomatedTests
             loadLoginPage(driver);
             sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
             populateSearch(driver);
+            submitValuation(driver);
         }
     }
 }

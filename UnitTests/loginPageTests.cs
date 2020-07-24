@@ -11,7 +11,7 @@ namespace UnitTests
     [TestFixture]
     public class loginPageTests
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
+        string fileDir = "C:\\Testing\\Evra\\";
         Program program;
         IWebDriver driver;
 

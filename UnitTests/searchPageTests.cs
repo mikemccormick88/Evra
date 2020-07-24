@@ -11,7 +11,7 @@ namespace UnitTests
     [TestFixture]
     public class searchPageTests
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
+        string fileDir = "C:\\Testing\\Evra\\";
         Program program;
         IWebDriver driver;
 
@@ -22,6 +22,7 @@ namespace UnitTests
             program = new Program();
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
+            program.populateSearch(driver);
         }
 
         [Test]
@@ -161,7 +162,7 @@ namespace UnitTests
                 string text = numberOfUnitsInput.GetAttribute("value");
 
                 //check test passes
-                if (text == "1")
+                if (text == "201")
                 {
                     //test passes if text box=1
                     pass = true;
@@ -186,28 +187,25 @@ namespace UnitTests
         }
 
         [Test]
-        public void DisableValuationButtonWithoutNoiInput()
+        public void DisableSearchButtonWithoutYearInput()
         {
             Boolean pass = false;
-            if (program.ElementIdExists(driver, "noi"))
-            {
-                IWebElement noiInput = driver.FindElement(By.Id("noi"));
-                for (int i = 0; i < 7; i++)
-                {
-                    noiInput.SendKeys(Keys.Backspace);
-                    i += 1;
-                }
-            }
+            //set up test
+            IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
+            yearbuilt.SendKeys(Keys.Backspace);
+            yearbuilt.SendKeys(Keys.Backspace);
+            yearbuilt.SendKeys(Keys.Backspace);
+            yearbuilt.SendKeys(Keys.Backspace);
+            IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
 
             //check test passes
-            if (program.ElementIdExists(driver, "introjsRunValuationButton"))
+            if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
             {
-                IWebElement submitButton = driver.FindElement(By.Id("introjsRunValuationButton"));
-                //check button is disabled here
-                //pass=true;
+                //test passes if search button is disabled
+                pass = true;
             }
 
-            //take screenshot if valuation button is enabled
+            //take screenshot if search button is enabled
             if (pass == false)
             {
                 //save screenshot with name of current failing test

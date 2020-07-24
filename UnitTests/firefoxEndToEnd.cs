@@ -9,7 +9,7 @@ namespace UnitTests
     [TestClass]
     public class firefoxEndToEnd
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
+        string fileDir = "C:\\Testing\\Evra\\";
 
         [TestMethod]
         public void firefoxEndToEndTest()
@@ -22,7 +22,7 @@ namespace UnitTests
             program.endToEnd(driver);
 
             //check test passes
-            if (driver.Url == "https://evra.geophy.com/results")
+            if (program.ElementIdExists(driver, "property-section"))
             {
                 //test passes if results page loads successfully
                 pass = true;

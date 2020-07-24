@@ -3,13 +3,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace UnitTests
 {
     [TestClass]
     public class chromeEndToEnd
     {
-        string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
+        string fileDir = "C:\\Testing\\Evra\\";
 
         [TestMethod]
         public void chromeEndToEndTest()
@@ -20,9 +21,9 @@ namespace UnitTests
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
             program.endToEnd(driver);
+            
 
-            //check test passes
-            if (driver.Url == "https://evra.geophy.com/results")
+            if (program.ElementIdExists(driver, "property-section"))
             {
                 //test passes if results page loads successfully
                 pass = true;
