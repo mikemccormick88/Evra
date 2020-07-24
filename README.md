@@ -1,7 +1,7 @@
 # Evra
 evra qa skills challenge
 
-Automated test suite of evra site using Selenium.
+Automated test suite of Evra site using Selenium.
 
 Main program runs a basic end-to-end for a given browser.
 
