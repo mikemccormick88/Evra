@@ -1,27 +1,32 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
-
+using NUnit.Framework;
 
 namespace UnitTests
 {
-    [TestClass]
-    public class crossBrowser
+    [TestFixture]
+    public class NUnit
     {
         string fileDir = "C:\\Users\\Mike.McCormick\\Documents\\Testing\\Evra\\";
-        [TestMethod]
-        public void LoginCheckEmailElementExists()
-        {
-            //set up test
-            Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
+        Program program;
+        IWebDriver driver;
 
+        [OneTimeSetUp]
+        public void Init()
+        {
+            driver = setUpDriver();
+            program = new Program();
+            program.loadLoginPage(driver);
+        }
+
+        [Test]
+        public void LoginPageEmailElementExists()
+        {
+            Boolean pass = false;
             //check test passes
             if (program.ElementIdExists(driver, "email"))
             {
@@ -37,21 +42,16 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void LoginCheckPasswordElementExists()
+        [Test]
+        public void LoginPagePasswordElementExists()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
 
             //check test passes
-            if (program.ElementIdExists(driver, "password"))
+            if (program.ElementCssSelectorExists(driver, "input#password"))
             {
                 pass = true;
             }
@@ -65,18 +65,13 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void LoginCheckLogInButtonExists()
+        [Test]
+        public void LoginPageLogInButtonExists()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
 
             //check test passes
             if (program.ElementXpathExists(driver, "//*[@class='button button--primary']"))
@@ -93,18 +88,13 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
-        
-        [TestMethod]
-        public void LoginCheckSignUpButtonExists()
+
+        [Test]
+        public void LoginPageSignUpButtonExists()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
 
             //check test passes
             if (program.ElementXpathExists(driver, "//*[@class='button button--secondary']"))
@@ -121,18 +111,13 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void LoginCheckPasswordResetLinkExists()
+        [Test]
+        public void LoginPagePasswordResetLinkExists()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
 
             //check test passes
             if (program.ElementLinkTextExists(driver, "Forgot password? Click here to reset"))
@@ -149,18 +134,13 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
-            driver.Close();
             Assert.IsTrue(pass);
         }
 
-        [TestMethod]
-        public void LoginCheckSignUpLinkExists()
+        [Test]
+        public void LoginPageSignUpLinkExists()
         {
-            //set up test
             Boolean pass = false;
-            IWebDriver driver = setUpDriver();
-            Program program = new Program();
-            program.loadLoginPage(driver);
 
             //check test passes
             if (program.ElementLinkTextExists(driver, "Don't have an acount yet? Sign up here"))
@@ -177,8 +157,49 @@ namespace UnitTests
                 System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
                 image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
             }
+            Assert.IsTrue(pass);
+        }
+
+        [Test]
+        public void LoginPageViewPasswordImageExists()
+        {
+            Boolean pass = false;
+
+            //check test passes
+            if (program.ElementCssSelectorExists(driver, "img#password-icon"))
+            {
+                pass = true;
+            }
+
+            if (pass == false)
+            {
+                //save screenshot with name of current failing test
+                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
+                string folder = this.GetType().Name;
+                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+            }
             driver.Close();
             Assert.IsTrue(pass);
+        }
+
+        [Test]
+        public void LoginCheckbox()
+        {
+            //set up test
+            Boolean pass = false;
+
+            IWebElement checkbox = driver.FindElement(By.XPath("//div[@class='checkbox']/span[@class='checkmark']"));
+
+            checkbox.Click();
+            //check box is clicked somehow
+        }
+
+        [OneTimeTearDown]
+        public void Close()
+        {
+            driver.Close();
         }
 
         public IWebDriver setUpDriver()

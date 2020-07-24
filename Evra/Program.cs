@@ -187,6 +187,18 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+
+        public Boolean ElementCssSelectorExists(IWebDriver driver, string selector)
+        {
+            if (driver.FindElements(By.CssSelector(selector)).Count() != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void submitValuation(IWebDriver driver)
         {
             if (ElementIdExists(driver, "introjsRunValuationButton"))
