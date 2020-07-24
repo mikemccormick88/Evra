@@ -205,18 +205,6 @@ namespace UnitTests
             Assert.IsTrue(pass);
         }
 
-        [Test]
-        public void LoginCheckbox()
-        {
-            //set up test
-            Boolean pass = false;
-
-            IWebElement checkbox = driver.FindElement(By.XPath("//div[@class='checkbox']/span[@class='checkmark']"));
-
-            checkbox.Click();
-            //check box is clicked somehow
-        }
-
         [OneTimeTearDown]
         public void Close()
         {
