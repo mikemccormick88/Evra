@@ -112,7 +112,7 @@ namespace EvraAutomatedTests
 
         public Boolean ElementExists(IWebDriver driver, string identifier, string search)
         {
-            if (identifier == "CssSelector")
+            if (identifier.ToUpper() == "CSSSELECTOR")
             {
                 if (driver.FindElements(By.CssSelector(search)).Count() != 0)
                 {
@@ -123,7 +123,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "Id")
+            if (identifier.ToUpper() == "ID")
             {
                 if (driver.FindElements(By.Id(search)).Count() != 0)
                 {
@@ -134,7 +134,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "XPath")
+            if (identifier.ToUpper() == "XPATH")
             {
                 if (driver.FindElements(By.XPath(search)).Count() != 0)
                 {
@@ -145,7 +145,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "LinkText")
+            if (identifier.ToUpper() == "LINKTEXT")
             {
                 if (driver.FindElements(By.LinkText(search)).Count() != 0)
                 {
@@ -156,7 +156,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "ClassName")
+            if (identifier.ToUpper() == "CLASSNAME")
             {
                 if (driver.FindElements(By.ClassName(search)).Count() != 0)
                 {
@@ -167,7 +167,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "Name")
+            if (identifier.ToUpper() == "NAME")
             {
                 if (driver.FindElements(By.Name(search)).Count() != 0)
                 {
@@ -178,7 +178,7 @@ namespace EvraAutomatedTests
                     return false;
                 }
             }
-            if (identifier == "TagName")
+            if (identifier.ToUpper() == "TAGNAME")
             {
                 if (driver.FindElements(By.TagName(search)).Count() != 0)
                 {
@@ -193,7 +193,6 @@ namespace EvraAutomatedTests
             {
                 return false;
             }
-
         }
  
         public void submitValuation(IWebDriver driver)

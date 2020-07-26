@@ -22,8 +22,6 @@ namespace UnitTests
             ieoptions.IgnoreZoomLevel = true;
             //stop login page being redirected to search page in explorer
             ieoptions.EnsureCleanSession = true;
-            ieoptions.BrowserCommandLineArguments = "-private";
-            //driver.Manage().Cookies.DeleteAllCookies();
             IWebDriver driver = new InternetExplorerDriver(ieoptions);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
 
