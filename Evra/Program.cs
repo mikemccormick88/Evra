@@ -15,7 +15,7 @@ namespace EvraAutomatedTests
             Program Program = new Program();
             Console.WriteLine("c for chrome, f for firefox, i for ie,");
             string go = Console.ReadLine();
-            if (go == "g")
+            if (go == "c")
             {
                 IWebDriver driver = new ChromeDriver();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -47,39 +47,34 @@ namespace EvraAutomatedTests
 
         public void sumbitLoginDetails(IWebDriver driver, string user, string password)
         {
-            if (isLoginPageLoaded(driver))
+            if (driver.Url == "https://evra.geophy.com/login")
             {
                 //find and populate username by id
-                //make sure element exists first
-                if (ElementIdExists(driver, "email"))
+                if (ElementExists(driver, "Id", "email"))
                 {
                     IWebElement userTextBox = driver.FindElement(By.Id("email"));
                     userTextBox.SendKeys(user);
                 }
                 //find and populate password by id
-                //make sure element exists first
-                if (ElementIdExists(driver, "password"))
+                if (ElementExists(driver, "Id", "password"))
                 {
                     IWebElement passwordTextBox = driver.FindElement(By.Id("password"));
                     passwordTextBox.SendKeys(password);
                     passwordTextBox.Submit();
                 }
             }
-            else
-            {
-            }
         }
 
         public void populateSearch(IWebDriver driver)
         {
             //populate address
-            if (ElementIdExists(driver, "address_input"))
+            if (ElementExists(driver, "Id", "address_input"))
             {
                 IWebElement addressInput = driver.FindElement(By.Id("address_input"));
                 addressInput.SendKeys("555 N. College Avenue, Tempe, AZ, 85281");
 
                 //select first address matched from dropdown
-                if (driver.FindElements(By.ClassName("pac-matched")).Count() != 0)
+                if (ElementExists(driver, "ClassName", "pac-matched"))
                 {
                     addressInput.SendKeys(Keys.ArrowDown);
                     addressInput.SendKeys(Keys.Return);
@@ -87,106 +82,123 @@ namespace EvraAutomatedTests
             }
 
             //populate noi
-            if (ElementIdExists(driver, "noi"))
+            if (ElementExists(driver, "Id", "noi"))
             {
                 IWebElement noiInput = driver.FindElement(By.Id("noi"));
                 noiInput.SendKeys("2000000");
             }
 
             //populate number of units
-            if (ElementXpathExists(driver, "//*[@name='number_of_units']"))
+            if (ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
             {
                 IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
                 numberOfUnitsInput.SendKeys("200");
             }
 
             //populate year built
-            if (ElementXpathExists(driver, "//*[@name='year_built']"))
+            if (ElementExists(driver, "XPath", "//*[@name='year_built']"))
             {
                 IWebElement yearInput = driver.FindElement(By.XPath("//*[@name='year_built']"));
                 yearInput.SendKeys("2000");
             }
 
             //populate occupancy
-            if (ElementXpathExists(driver, "//*[@name='occupancy']"))
+            if (ElementExists(driver, "XPath", "//*[@name='occupancy']"))
             {
                 IWebElement occupancyInput = driver.FindElement(By.XPath("//*[@name='occupancy']"));
                 occupancyInput.SendKeys("80");
             }
         }
 
-        public Boolean isLoginPageLoaded(IWebDriver driver)
+        public Boolean ElementExists(IWebDriver driver, string identifier, string search)
         {
-            Boolean isLoaded = false;
-            if (driver.Url == "https://evra.geophy.com/login")
+            if (identifier == "CssSelector")
+            {
+                if (driver.FindElements(By.CssSelector(search)).Count() != 0)
                 {
-                isLoaded = true;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            return isLoaded;
-        }
-
-        public Boolean ElementIdExists(IWebDriver driver, string elementId)
-        {
-            if (driver.FindElements(By.Id(elementId)).Count() != 0)
+            if (identifier == "Id")
             {
-                return true;
+                if (driver.FindElements(By.Id(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (identifier == "XPath")
+            {
+                if (driver.FindElements(By.XPath(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (identifier == "LinkText")
+            {
+                if (driver.FindElements(By.LinkText(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (identifier == "ClassName")
+            {
+                if (driver.FindElements(By.ClassName(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (identifier == "Name")
+            {
+                if (driver.FindElements(By.Name(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if (identifier == "TagName")
+            {
+                if (driver.FindElements(By.TagName(search)).Count() != 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
                 return false;
             }
-        }
 
-        public Boolean ElementXpathExists(IWebDriver driver, string path)
-        {
-            if (driver.FindElements(By.XPath(path)).Count() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
-
-        public Boolean ElementLinkTextExists(IWebDriver driver, string link)
-        {
-            if (driver.FindElements(By.LinkText(link)).Count() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public Boolean ElementCssSelectorExists(IWebDriver driver, string selector)
-        {
-            if (driver.FindElements(By.CssSelector(selector)).Count() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public Boolean ElementClassameExists(IWebDriver driver, string className)
-        {
-            if (driver.FindElements(By.ClassName(className)).Count() != 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
+ 
         public void submitValuation(IWebDriver driver)
         {
-            if (ElementIdExists(driver, "introjsRunValuationButton"))
+            if (ElementExists(driver, "Id", "introjsRunValuationButton"))
             {
                 IWebElement submitButton = driver.FindElement(By.Id("introjsRunValuationButton"));
                 submitButton.Click();

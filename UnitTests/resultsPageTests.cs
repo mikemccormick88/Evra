@@ -27,18 +27,21 @@ namespace UnitTests
         {
             Boolean pass = false;
 
-            //get valuation as int in very nasty way
-            IWebElement element = driver.FindElement(By.XPath("//*[@id='property-section']"));
-            string html=element.GetAttribute("innerHTML");
-            html = html.Substring(html.IndexOf('$'),12);
-            html = html.Substring(2);
-            string valuation = html.Replace(",", "");
-            int valInt = Int32.Parse(valuation);
-            
-            if(valInt>0)
+            //get valuation as int in nasty way
+            if (program.ElementExists(driver, "XPath", "//*[@id='property-section']"))
             {
-                //test passes if valuation is above 0
-                pass = true;
+                IWebElement element = driver.FindElement(By.XPath("//*[@id='property-section']"));
+                string html = element.GetAttribute("innerHTML");
+                html = html.Substring(html.IndexOf('$'), 12);
+                html = html.Substring(2);
+                string valuation = html.Replace(",", "");
+                int valInt = Int32.Parse(valuation);
+
+                if (valInt > 0)
+                {
+                    //test passes if valuation is above 0
+                    pass = true;
+                }
             }
             if (pass == false)
             {
@@ -55,15 +58,21 @@ namespace UnitTests
         {
             Boolean pass = false;
             //get valuation as int in very nasty way
-            IWebElement saveReportButton = driver.FindElement(By.ClassName("button--secondary"));
-            saveReportButton.Click();
-            IWebElement reportFavourited = driver.FindElement(By.TagName("label"));
-            string savedText = reportFavourited.GetAttribute("value");
-
-            if (savedText == "Report Favorited")
+            if (program.ElementExists(driver, "ClassName", "button--secondary"))
             {
-                //test passes if correct text is displayed
-                pass = true;
+                IWebElement saveReportButton = driver.FindElement(By.ClassName("button--secondary"));
+                saveReportButton.Click();
+                if (program.ElementExists(driver, "TagName", "label"))
+                    {
+                    IWebElement reportFavourited = driver.FindElement(By.TagName("label"));
+                    string savedText = reportFavourited.GetAttribute("value");
+
+                    if (savedText == "Report Favorited")
+                    {
+                        //test passes if correct text is displayed
+                        pass = true;
+                    }
+                }
             }
             if (pass == false)
             {

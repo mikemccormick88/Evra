@@ -11,7 +11,6 @@ namespace UnitTests
     [TestFixture]
     public class searchPageTests
     {
-        string fileDir = "C:\\Testing\\Evra\\";
         Program program;
         IWebDriver driver;
 
@@ -47,7 +46,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementIdExists(driver, "address_input"))
+            if (program.ElementExists(driver, "Id", "address_input"))
             {
                 pass = true;
             }
@@ -64,7 +63,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementIdExists(driver, "noi"))
+            if (program.ElementExists(driver, "Id", "noi"))
             {
                 pass = true;
             }
@@ -81,7 +80,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementXpathExists(driver, "//*[@name='number_of_units']"))
+            if (program.ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
             {
                 pass = true;
             }
@@ -98,7 +97,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementXpathExists(driver, "//*[@name='year_built']"))
+            if (program.ElementExists(driver, "XPath", "//*[@name='year_built']"))
             {
                 pass = true;
             }
@@ -115,7 +114,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementXpathExists(driver, "//*[@name='occupancy']"))
+            if (program.ElementExists(driver, "XPath", "//*[@name='occupancy']"))
             {
                 pass = true;
             }
@@ -131,7 +130,7 @@ namespace UnitTests
         public void NumberOfUnitsInputTest()
         {
             Boolean pass = false;
-            if (program.ElementXpathExists(driver, "//*[@name='number_of_units']"))
+            if (program.ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
             {
                 IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
                 numberOfUnitsInput.SendKeys(Keys.ArrowUp);
@@ -163,20 +162,22 @@ namespace UnitTests
         {
             Boolean pass = false;
             //set up test
-            IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
-            yearbuilt.SendKeys(Keys.Backspace);
-            yearbuilt.SendKeys(Keys.Backspace);
-            yearbuilt.SendKeys(Keys.Backspace);
-            yearbuilt.SendKeys(Keys.Backspace);
-            IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
-
-            //check test passes
-            if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
+            if (program.ElementExists(driver, "Name", "year_built"))
             {
-                //test passes if search button is disabled
-                pass = true;
-            }
+                IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
+                yearbuilt.SendKeys(Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
+                if (program.ElementExists(driver, "Id", "introjsRunValuationButton"))
+                {
+                    IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
 
+                    //check test passes
+                    if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
+                    {
+                        //test passes if search button is disabled
+                        pass = true;
+                    }
+                }
+            }
             //take screenshot if search button is enabled
             if (pass == false)
             {

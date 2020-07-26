@@ -11,7 +11,6 @@ namespace UnitTests
     [TestFixture]
     public class loginPageTests
     {
-        string fileDir = "C:\\Testing\\Evra\\";
         Program program;
         IWebDriver driver;
 
@@ -45,7 +44,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementIdExists(driver, "email"))
+            if (program.ElementExists(driver, "Id", "email"))
             {
                 pass = true;
             }
@@ -62,7 +61,7 @@ namespace UnitTests
         {
             Boolean pass = false;
             //check test passes
-            if (program.ElementIdExists(driver, "email"))
+            if (program.ElementExists(driver, "Id", "email"))
             {
                 IWebElement userTextBox = driver.FindElement(By.Id("email"));
                 string email = userTextBox.GetAttribute("value");
@@ -85,11 +84,9 @@ namespace UnitTests
             Boolean pass = false;
 
             //check test passes
-            if (program.ElementCssSelectorExists(driver, "input#password"))
+            if (program.ElementExists(driver, "Id", "password"))
             {
-                {
-                    pass = true;
-                }
+                pass = true;
             }
             if (pass == false)
             {
@@ -105,7 +102,7 @@ namespace UnitTests
             Boolean pass = false;
 
             //check test passes
-            if (program.ElementXpathExists(driver, "//*[@class='button button--primary']"))
+            if (program.ElementExists(driver, "XPath", "//*[@class='button button--primary']"))
             {
                 pass = true;
             }
@@ -123,7 +120,7 @@ namespace UnitTests
             Boolean pass = false;
 
             //check test passes
-            if (program.ElementXpathExists(driver, "//*[@class='button button--secondary']"))
+            if (program.ElementExists(driver, "XPath", "//*[@class='button button--secondary']"))
             {
                 pass = true;
             }
@@ -141,7 +138,7 @@ namespace UnitTests
             Boolean pass = false;
 
             //check test passes
-            if (program.ElementLinkTextExists(driver, "Forgot password? Click here to reset"))
+            if (program.ElementExists(driver, "LinkText", "Forgot password? Click here to reset"))
             {
                 pass = true;
             }
@@ -159,7 +156,7 @@ namespace UnitTests
             Boolean pass = false;
 
             //check test passes
-            if (program.ElementLinkTextExists(driver, "Don't have an acount yet? Sign up here"))
+            if (program.ElementExists(driver, "LinkText", "Don't have an acount yet? Sign up here"))
             {
                 pass = true;
             }
@@ -176,8 +173,8 @@ namespace UnitTests
         {
             Boolean pass = false;
 
-            //check test passes
-            if (program.ElementCssSelectorExists(driver, "img#password-icon"))
+            //check test passes 
+            if (program.ElementExists(driver, "CssSelector", "img#password-icon"))
             {
                 pass = true;
             }
@@ -192,12 +189,12 @@ namespace UnitTests
         [Test]
         public void isCheckboxTicked()
         {
-            Boolean pass = false;
-            if (program.ElementClassameExists(driver, "checkbox"))
+            Boolean pass = false; // 
+            if (program.ElementExists(driver, "ClassName", "checkbox"))
             {
                 IWebElement checkbox = driver.FindElement(By.ClassName("checkbox"));
                 checkbox.Click();
-                if (program.ElementCssSelectorExists(driver, "input:checked[type='checkbox']"))
+                if (program.ElementExists(driver, "CssSelector", "input:checked[type='checkbox']"))
                 {
                     pass = true;
                 }

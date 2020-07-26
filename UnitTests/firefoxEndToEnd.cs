@@ -22,7 +22,7 @@ namespace UnitTests
             program.endToEnd(driver);
 
             //check test passes
-            if (program.ElementIdExists(driver, "property-section"))
+            if (program.ElementExists(driver, "Id", "property-section"))
             {
                 //test passes if results page loads successfully
                 pass = true;

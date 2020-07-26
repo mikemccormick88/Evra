@@ -10,6 +10,7 @@ namespace UnitTests
     public class explorerEndToEnd
     {
         [TestMethod]
+        [Timeout (20000)]
         public void IeEndToEndTest()
         {
             //set up test
@@ -30,7 +31,7 @@ namespace UnitTests
             program.endToEnd(driver);
 
             //check test passes
-            if (program.ElementIdExists(driver, "property-section"))
+            if (program.ElementExists(driver, "Id", "property-section"))
             {
                 //test passes if search page loads successfully
                 pass = true;
