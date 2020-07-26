@@ -10,7 +10,7 @@ namespace UnitTests
     public class explorerEndToEnd
     {
         [TestMethod]
-        [Timeout (20000)]
+        [Timeout (30000)]
         public void IeEndToEndTest()
         {
             //set up test
