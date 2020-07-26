@@ -23,7 +23,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isLoginPageLoaded()
+        public void loginPageLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -40,7 +40,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPageEmailElementExists()
+        public void emailElementExists()
         {
             Boolean pass = false;
             //check test passes
@@ -57,7 +57,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isEmailValueEmpty()
+        public void emailValueEmpty()
         {
             Boolean pass = false;
             //check test passes
@@ -79,7 +79,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPagePasswordElementExists()
+        public void passwordElementExists()
         {
             Boolean pass = false;
 
@@ -97,7 +97,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPageLogInButtonExists()
+        public void logInButtonExists()
         {
             Boolean pass = false;
 
@@ -115,7 +115,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPageSignUpButtonExists()
+        public void signUpButtonExists()
         {
             Boolean pass = false;
 
@@ -133,7 +133,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPagePasswordResetLinkExists()
+        public void passwordResetLinkExists()
         {
             Boolean pass = false;
 
@@ -151,7 +151,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPageSignUpLinkExists()
+        public void signUpLinkExists()
         {
             Boolean pass = false;
 
@@ -169,7 +169,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoginPageViewPasswordImageExists()
+        public void viewPasswordImageExists()
         {
             Boolean pass = false;
 
@@ -187,7 +187,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isCheckboxTicked()
+        public void checkboxTicked()
         {
             Boolean pass = false; // 
             if (program.ElementExists(driver, "ClassName", "checkbox"))

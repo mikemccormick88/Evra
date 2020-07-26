@@ -23,7 +23,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isValuationAboveZero()
+        public void valuationAboveZero()
         {
             Boolean pass = false;
 

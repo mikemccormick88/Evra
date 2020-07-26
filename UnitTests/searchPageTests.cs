@@ -25,7 +25,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isSearchPageLoaded()
+        public void searchPageLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -42,7 +42,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isAddressInputLoaded()
+        public void addressInputLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -59,7 +59,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isNoiInputLoaded()
+        public void noiInputLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -76,7 +76,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isNumberOfUnitsInputLoaded()
+        public void numberOfUnitsInputLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -93,7 +93,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isYearBuiltLoaded()
+        public void yearBuiltInputLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -110,7 +110,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void isOccupancyInputLoaded()
+        public void occupancyInputLoaded()
         {
             Boolean pass = false;
             //check test passes
@@ -127,7 +127,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void NumberOfUnitsInputTest()
+        public void numberOfUnitsInputTest()
         {
             Boolean pass = false;
             if (program.ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
@@ -158,7 +158,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void DisableSearchButtonWithoutYearInput()
+        public void disableSearchButtonWithoutYearInput()
         {
             Boolean pass = false;
             //set up test
