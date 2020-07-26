@@ -13,9 +13,9 @@ namespace EvraAutomatedTests
         {
             //main program allows user to submit valuations in chrome, ff or ie
             Program Program = new Program();
-            Console.WriteLine("c for chrome, f for firefox, i for ie, esc to quit");
+            Console.WriteLine("c for chrome, f for firefox, i for ie,");
             string go = Console.ReadLine();
-            if (go == "c")
+            if (go == "g")
             {
                 IWebDriver driver = new ChromeDriver();
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -172,6 +172,17 @@ namespace EvraAutomatedTests
                 return false;
             }
         }
+        public Boolean ElementClassameExists(IWebDriver driver, string className)
+        {
+            if (driver.FindElements(By.ClassName(className)).Count() != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public void submitValuation(IWebDriver driver)
         {
@@ -188,6 +199,14 @@ namespace EvraAutomatedTests
             sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
             populateSearch(driver);
             submitValuation(driver);
+        }
+
+        public void takeScreenshot(IWebDriver driver, string filename, string folder)
+        {
+            string fileDir = "C:\\temp\\Evra\\";
+            Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
+            System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
+            image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
         }
     }
 }

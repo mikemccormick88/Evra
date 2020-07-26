@@ -11,7 +11,6 @@ namespace UnitTests
     [TestFixture]
     public class resultsPageTests
     {
-        string fileDir = "C:\\Testing\\Evra\\";
         Program program;
         IWebDriver driver;
 
@@ -31,9 +30,8 @@ namespace UnitTests
             //get valuation as int in very nasty way
             IWebElement element = driver.FindElement(By.XPath("//*[@id='property-section']"));
             string html=element.GetAttribute("innerHTML");
-            html = html.Substring(html.IndexOf('$'));
+            html = html.Substring(html.IndexOf('$'),12);
             html = html.Substring(2);
-            html = html.Substring(0,10);
             string valuation = html.Replace(",", "");
             int valInt = Int32.Parse(valuation);
             
@@ -44,14 +42,34 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             driver.Close();
+            Assert.IsTrue(pass);
+        }
+
+        [Test]
+        [Ignore("disabled because saved text doesn't always appear making test flaky")]
+        public void saveReport()
+        {
+            Boolean pass = false;
+            //get valuation as int in very nasty way
+            IWebElement saveReportButton = driver.FindElement(By.ClassName("button--secondary"));
+            saveReportButton.Click();
+            IWebElement reportFavourited = driver.FindElement(By.TagName("label"));
+            string savedText = reportFavourited.GetAttribute("value");
+
+            if (savedText == "Report Favorited")
+            {
+                //test passes if correct text is displayed
+                pass = true;
+            }
+            if (pass == false)
+            {
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
+            }
             Assert.IsTrue(pass);
         }
 

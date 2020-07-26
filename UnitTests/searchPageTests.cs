@@ -36,12 +36,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -57,12 +53,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -78,12 +70,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -99,12 +87,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -120,12 +104,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -141,12 +121,8 @@ namespace UnitTests
             }
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
@@ -175,12 +151,8 @@ namespace UnitTests
                 //take screenshot if text box value was not 1
                 if (pass == false)
                 {
-                    //save screenshot with name of current failing test
-                    string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                    string folder = this.GetType().Name;
-                    Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                    System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                    image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                    //save screenshot with name of failing test if test fails
+                    program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
                 }
                 Assert.IsTrue(pass);
             }
@@ -208,12 +180,8 @@ namespace UnitTests
             //take screenshot if search button is enabled
             if (pass == false)
             {
-                //save screenshot with name of current failing test
-                string filename = System.Reflection.MethodBase.GetCurrentMethod().Name;
-                string folder = this.GetType().Name;
-                Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
-                System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
-                image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+                //save screenshot with name of failing test if test fails
+                program.takeScreenshot(driver, System.Reflection.MethodBase.GetCurrentMethod().Name, this.GetType().Name);
             }
             Assert.IsTrue(pass);
         }
