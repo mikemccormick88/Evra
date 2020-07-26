@@ -10,25 +10,21 @@ namespace UnitTests
     [TestClass]
     public class chromeEndToEnd
     {
-        string fileDir = "C:\\Testing\\Evra\\";
 
         [TestMethod]
         public void chromeEndToEndTest()
         {
-            //set up test
             Boolean pass = false;
             IWebDriver driver = new ChromeDriver();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
             program.endToEnd(driver);
-            
-
+            //check test passes
             if (program.ElementExists(driver, "Id", "property-section"))
             {
                 //test passes if results page loads successfully
                 pass = true;
             }
-
             //take screenshot if results page failed to load
             if (pass == false)
             {

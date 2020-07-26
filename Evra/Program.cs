@@ -18,14 +18,16 @@ namespace EvraAutomatedTests
             if (go == "c")
             {
                 IWebDriver driver = new ChromeDriver();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                string text = "123456789";
+                text = text.Substring(text.IndexOf('2')+1, 2);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
             else if (go == "f")
             {
                 IWebDriver driver = new FirefoxDriver();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
@@ -34,7 +36,7 @@ namespace EvraAutomatedTests
                 InternetExplorerOptions ieoptions = new InternetExplorerOptions();
                 ieoptions.IgnoreZoomLevel = true;
                 IWebDriver driver = new InternetExplorerDriver(ieoptions);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
@@ -72,36 +74,30 @@ namespace EvraAutomatedTests
             {
                 IWebElement addressInput = driver.FindElement(By.Id("address_input"));
                 addressInput.SendKeys("555 N. College Avenue, Tempe, AZ, 85281");
-
                 //select first address matched from dropdown
-                if (ElementExists(driver, "ClassName", "pac-matched"))
+                if (driver.FindElements(By.ClassName("pac-matched")).Count() != 0)
                 {
-                    addressInput.SendKeys(Keys.ArrowDown);
-                    addressInput.SendKeys(Keys.Return);
+                    addressInput.SendKeys(Keys.ArrowDown + Keys.Return);
                 }
             }
-
             //populate noi
             if (ElementExists(driver, "Id", "noi"))
             {
                 IWebElement noiInput = driver.FindElement(By.Id("noi"));
                 noiInput.SendKeys("2000000");
             }
-
             //populate number of units
             if (ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
             {
                 IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
                 numberOfUnitsInput.SendKeys("200");
             }
-
             //populate year built
             if (ElementExists(driver, "XPath", "//*[@name='year_built']"))
             {
                 IWebElement yearInput = driver.FindElement(By.XPath("//*[@name='year_built']"));
                 yearInput.SendKeys("2000");
             }
-
             //populate occupancy
             if (ElementExists(driver, "XPath", "//*[@name='occupancy']"))
             {
@@ -112,87 +108,70 @@ namespace EvraAutomatedTests
 
         public Boolean ElementExists(IWebDriver driver, string identifier, string search)
         {
+            Boolean exists = false;
             if (identifier.ToUpper() == "CSSSELECTOR")
             {
                 if (driver.FindElements(By.CssSelector(search)).Count() != 0)
                 {
-                    return true;
+                    exists = true;
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "ID")
-            {
-                if (driver.FindElements(By.Id(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "XPATH")
-            {
-                if (driver.FindElements(By.XPath(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "LINKTEXT")
-            {
-                if (driver.FindElements(By.LinkText(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "CLASSNAME")
-            {
-                if (driver.FindElements(By.ClassName(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "NAME")
-            {
-                if (driver.FindElements(By.Name(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            if (identifier.ToUpper() == "TAGNAME")
-            {
-                if (driver.FindElements(By.TagName(search)).Count() != 0)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                else if (identifier.ToUpper() == "ID")
+                    if (driver.FindElements(By.Id(search)).Count() != 0)
+                    {
+                        exists = true;
+                    }
+                    else if (identifier.ToUpper() == "XPATH")
+                    {
+                        if (driver.FindElements(By.XPath(search)).Count() != 0)
+                        {
+                            exists = true;
+                        }
+                        else if (identifier.ToUpper() == "LINKTEXT")
+                        {
+                            if (driver.FindElements(By.LinkText(search)).Count() != 0)
+                            {
+                                exists = true;
+                            }
+                            else if (identifier.ToUpper() == "XPATH")
+                            {
+                                if (driver.FindElements(By.XPath(search)).Count() != 0)
+                                {
+                                    exists = true;
+                                }
+                                else if (identifier.ToUpper() == "NAME")
+                                {
+                                    if (driver.FindElements(By.Name(search)).Count() != 0)
+                                    {
+                                        exists = true;
+                                    }
+                                    else if (identifier.ToUpper() == "CLASSNAME")
+                                    {
+                                        if (driver.FindElements(By.ClassName(search)).Count() != 0)
+                                        {
+                                            exists = true;
+                                        }
+                                        else if (identifier.ToUpper() == "TAGNAME")
+                                        {
+                                            if (driver.FindElements(By.TagName(search)).Count() != 0)
+                                            {
+                                                exists = true;
+                                            }
+                                            else
+                                            {
+                                                exists = false;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
             }
             else
             {
-                return false;
+                exists = true;
             }
+            return exists;
         }
  
         public void submitValuation(IWebDriver driver)

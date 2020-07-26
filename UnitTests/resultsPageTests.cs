@@ -26,23 +26,22 @@ namespace UnitTests
         public void valuationAboveZero()
         {
             Boolean pass = false;
-
             //get valuation as int in nasty way
             if (program.ElementExists(driver, "XPath", "//*[@id='property-section']"))
             {
                 IWebElement element = driver.FindElement(By.XPath("//*[@id='property-section']"));
                 string html = element.GetAttribute("innerHTML");
-                html = html.Substring(html.IndexOf('$'), 12);
-                html = html.Substring(2);
+                html = html.Substring(html.IndexOf('$')+2, 10);
                 string valuation = html.Replace(",", "");
                 int valInt = Int32.Parse(valuation);
-
+                //check test passes
                 if (valInt > 0)
                 {
                     //test passes if valuation is above 0
                     pass = true;
                 }
             }
+            //take screenshot if valuation is >=0
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -66,14 +65,14 @@ namespace UnitTests
                     {
                     IWebElement reportFavourited = driver.FindElement(By.TagName("label"));
                     string savedText = reportFavourited.GetAttribute("value");
-
+                    //check test passes
                     if (savedText == "Report Favorited")
                     {
-                        //test passes if correct text is displayed
                         pass = true;
                     }
                 }
             }
+            //take screenshot if report saved test does not display
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails

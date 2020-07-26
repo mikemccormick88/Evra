@@ -33,6 +33,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if search page failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -50,6 +51,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if address input failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -67,6 +69,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if noi input failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -84,6 +87,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if number of units input failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -101,6 +105,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if year built input failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -118,6 +123,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if occupancy input failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -146,7 +152,6 @@ namespace UnitTests
                 {
                     pass = false;
                 }
-
                 //take screenshot if text box value was not 1
                 if (pass == false)
                 {
@@ -161,7 +166,6 @@ namespace UnitTests
         public void disableSearchButtonWithoutYearInput()
         {
             Boolean pass = false;
-            //set up test
             if (program.ElementExists(driver, "Name", "year_built"))
             {
                 IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
@@ -169,7 +173,6 @@ namespace UnitTests
                 if (program.ElementExists(driver, "Id", "introjsRunValuationButton"))
                 {
                     IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
-
                     //check test passes
                     if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
                     {

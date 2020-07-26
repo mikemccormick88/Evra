@@ -13,10 +13,7 @@ namespace UnitTests
         [Timeout (30000)]
         public void IeEndToEndTest()
         {
-            //set up test
             Boolean pass = false;
-
-            //set up driver and options
             InternetExplorerOptions ieoptions = new InternetExplorerOptions();
             //causes exception when zoom settings are inconsistent
             ieoptions.IgnoreZoomLevel = true;
@@ -24,16 +21,15 @@ namespace UnitTests
             ieoptions.EnsureCleanSession = true;
             IWebDriver driver = new InternetExplorerDriver(ieoptions);
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-
             Program program = new Program();
             program.endToEnd(driver);
-
             //check test passes
             if (program.ElementExists(driver, "Id", "property-section"))
             {
                 //test passes if search page loads successfully
                 pass = true;
             }
+            //take screenshot if search page failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails

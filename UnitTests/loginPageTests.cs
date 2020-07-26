@@ -142,6 +142,7 @@ namespace UnitTests
             {
                 pass = true;
             }
+            //take screenshot if password reset failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -154,12 +155,12 @@ namespace UnitTests
         public void signUpLinkExists()
         {
             Boolean pass = false;
-
             //check test passes
             if (program.ElementExists(driver, "LinkText", "Don't have an acount yet? Sign up here"))
             {
                 pass = true;
             }
+            //take screenshot if sign up link failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -172,12 +173,12 @@ namespace UnitTests
         public void viewPasswordImageExists()
         {
             Boolean pass = false;
-
             //check test passes 
             if (program.ElementExists(driver, "CssSelector", "img#password-icon"))
             {
                 pass = true;
             }
+            //take screenshot if password image failed to load
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
@@ -189,7 +190,8 @@ namespace UnitTests
         [Test]
         public void checkboxTicked()
         {
-            Boolean pass = false; // 
+            Boolean pass = false;
+            //check test passes
             if (program.ElementExists(driver, "ClassName", "checkbox"))
             {
                 IWebElement checkbox = driver.FindElement(By.ClassName("checkbox"));
@@ -199,6 +201,7 @@ namespace UnitTests
                     pass = true;
                 }
             }
+            //take screenshot if checkbox is not ticked
             if (pass == false)
             {
                 //save screenshot with name of failing test if test fails
