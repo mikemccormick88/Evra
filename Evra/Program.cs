@@ -109,63 +109,54 @@ namespace EvraAutomatedTests
         public Boolean ElementExists(IWebDriver driver, string identifier, string search)
         {
             Boolean exists = false;
-            if (identifier.ToUpper() == "CSSSELECTOR")
+            if (identifier == "CssSelector")
             {
                 if (driver.FindElements(By.CssSelector(search)).Count() != 0)
                 {
                     exists = true;
                 }
-                else if (identifier.ToUpper() == "ID")
-                    if (driver.FindElements(By.Id(search)).Count() != 0)
-                    {
-                        exists = true;
-                    }
-                    else if (identifier.ToUpper() == "XPATH")
-                    {
-                        if (driver.FindElements(By.XPath(search)).Count() != 0)
-                        {
-                            exists = true;
-                        }
-                        else if (identifier.ToUpper() == "LINKTEXT")
-                        {
-                            if (driver.FindElements(By.LinkText(search)).Count() != 0)
-                            {
-                                exists = true;
-                            }
-                            else if (identifier.ToUpper() == "XPATH")
-                            {
-                                if (driver.FindElements(By.XPath(search)).Count() != 0)
-                                {
-                                    exists = true;
-                                }
-                                else if (identifier.ToUpper() == "NAME")
-                                {
-                                    if (driver.FindElements(By.Name(search)).Count() != 0)
-                                    {
-                                        exists = true;
-                                    }
-                                    else if (identifier.ToUpper() == "CLASSNAME")
-                                    {
-                                        if (driver.FindElements(By.ClassName(search)).Count() != 0)
-                                        {
-                                            exists = true;
-                                        }
-                                        else if (identifier.ToUpper() == "TAGNAME")
-                                        {
-                                            if (driver.FindElements(By.TagName(search)).Count() != 0)
-                                            {
-                                                exists = true;
-                                            }
-                                            else
-                                            {
-                                                exists = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            }
+            else if (identifier == "Id")
+            {
+                if (driver.FindElements(By.Id(search)).Count() != 0)
+                {
+                    exists = true;
+                }
+            }
+            else if (identifier == "XPath")
+            {
+                if (driver.FindElements(By.XPath(search)).Count() != 0)
+                {
+                    exists = true;
+                }
+            }
+            else if (identifier == "LinkText")
+            {
+                if (driver.FindElements(By.LinkText(search)).Count() != 0)
+                {
+                    exists = true;
+                }
+            }
+            else if (identifier == "Name")
+            {
+                if (driver.FindElements(By.Name(search)).Count() != 0)
+                {
+                    exists = true;
+                }
+            }
+            else if (identifier == "ClassName")
+            {
+                if (driver.FindElements(By.ClassName(search)).Count() != 0)
+                {
+                    exists = true;
+                }
+            }
+            else if (identifier == "TagName")
+            {
+                if (driver.FindElements(By.TagName(search)).Count() != 0)
+                {
+                    exists = true;
+                }
             }
             else
             {
