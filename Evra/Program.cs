@@ -169,7 +169,7 @@ namespace EvraAutomatedTests
             }
             else
             {
-                exists = true;
+                exists = false;
             }
             return exists;
         }
