@@ -18,26 +18,19 @@ namespace EvraAutomatedTests
             string go = Console.ReadLine();
             if (go == "c")
             {
-                IWebDriver driver = new ChromeDriver();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
-                string text = "123456789";
-                text = text.Substring(text.IndexOf('2')+1, 2);
+                IWebDriver driver = Program.getDriver("Chrome", 20);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
             else if (go == "f")
             {
-                IWebDriver driver = new FirefoxDriver();
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                IWebDriver driver = Program.getDriver("Firefox", 20);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
             else if (go == "i")
             {
-                InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-                ieoptions.IgnoreZoomLevel = true;
-                IWebDriver driver = new InternetExplorerDriver(ieoptions);
-                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
+                IWebDriver driver = Program.getDriver("IE", 20);
                 Program.endToEnd(driver);
                 Console.ReadLine();
             }
