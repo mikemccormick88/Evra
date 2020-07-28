@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.IE;
 
 namespace UnitTests
 {
@@ -14,14 +13,8 @@ namespace UnitTests
         public void IeEndToEndTest()
         {
             Boolean pass = false;
-            InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-            //causes exception when zoom settings are inconsistent
-            ieoptions.IgnoreZoomLevel = true;
-            //stop login page being redirected to search page in explorer
-            ieoptions.EnsureCleanSession = true;
-            IWebDriver driver = new InternetExplorerDriver(ieoptions);
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
+            IWebDriver driver = program.getDriver("IE", 20);
             program.endToEnd(driver);
             //check test passes
             if (program.ElementExists(driver, "Id", "property-section"))

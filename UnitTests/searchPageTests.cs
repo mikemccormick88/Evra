@@ -1,9 +1,6 @@
 ﻿using System;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.IE;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -17,8 +14,8 @@ namespace UnitTests
         [OneTimeSetUp]
         public void Init()
         {
-            driver = setUpDriver();
             program = new Program();
+            driver = program.getDriver("Chrome", 20);
             program.loadLoginPage(driver);
             program.sumbitLoginDetails(driver, "qaskillschallenge@geophy.com", "qaskillschallenge@geophy.com");
             program.populateSearch(driver);
@@ -138,6 +135,7 @@ namespace UnitTests
             Boolean pass = false;
             if (program.ElementExists(driver, "XPath", "//*[@name='number_of_units']"))
             {
+                //use the up arrow key to increment 200 by 1 (number of units is set to 200 in test setup)
                 IWebElement numberOfUnitsInput = driver.FindElement(By.XPath("//*[@name='number_of_units']"));
                 numberOfUnitsInput.SendKeys(Keys.ArrowUp);
                 string text = numberOfUnitsInput.GetAttribute("value");
@@ -145,14 +143,14 @@ namespace UnitTests
                 //check test passes
                 if (text == "201")
                 {
-                    //test passes if text box=1
+                    //test passes if text box=201
                     pass = true;
                 }
                 else
                 {
                     pass = false;
                 }
-                //take screenshot if text box value was not 1
+                //take screenshot if text box value was not 201
                 if (pass == false)
                 {
                     //save screenshot with name of failing test if test fails
@@ -168,16 +166,20 @@ namespace UnitTests
             Boolean pass = false;
             if (program.ElementExists(driver, "Name", "year_built"))
             {
-                IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
-                yearbuilt.SendKeys(Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
-                if (program.ElementExists(driver, "Id", "introjsRunValuationButton"))
+                //delete text 2000 from the year built field
+                if (program.ElementExists(driver, "Name", "year_built"))
                 {
-                    IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
-                    //check test passes
-                    if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
+                    IWebElement yearbuilt = driver.FindElement(By.Name("year_built"));
+                    yearbuilt.SendKeys(Keys.Backspace + Keys.Backspace + Keys.Backspace + Keys.Backspace);
+                    if (program.ElementExists(driver, "Id", "introjsRunValuationButton"))
                     {
-                        //test passes if search button is disabled
-                        pass = true;
+                        IWebElement button = driver.FindElement(By.Id("introjsRunValuationButton"));
+                        //check test passes
+                        if (button.GetAttribute("class") == "button w-full button--primary button--disabled")
+                        {
+                            //test passes if run valuation button is disabled
+                            pass = true;
+                        }
                     }
                 }
             }
@@ -194,20 +196,6 @@ namespace UnitTests
         public void Close()
         {
             driver.Close();
-        }
-
-        public IWebDriver setUpDriver()
-        {
-            IWebDriver chromeDriver = new ChromeDriver();
-            chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            return chromeDriver;
-            //IWebDriver firefoxDriver = new FirefoxDriver();
-            //InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-            //ieoptions.IgnoreZoomLevel = true;
-            //ieoptions.EnsureCleanSession = true;
-            //IWebDriver ieDriver = new InternetExplorerDriver(ieoptions);
-            //ieDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            //return ieDriver;
         }
     }
 }

@@ -1,9 +1,6 @@
 ﻿using System;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.IE;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -17,8 +14,8 @@ namespace UnitTests
         [OneTimeSetUp]
         public void Init()
         {
-            driver = setUpDriver();
             program = new Program();
+            driver = program.getDriver("Chrome", 20);
             program.loadLoginPage(driver);
         }
 
@@ -214,20 +211,6 @@ namespace UnitTests
         public void Close()
         {
             driver.Close();
-        }
-
-        public IWebDriver setUpDriver()
-        {
-            IWebDriver chromeDriver = new ChromeDriver();
-            chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            return chromeDriver;
-            //IWebDriver firefoxDriver = new FirefoxDriver();
-            //InternetExplorerOptions ieoptions = new InternetExplorerOptions();
-            //ieoptions.IgnoreZoomLevel = true;
-            //ieoptions.EnsureCleanSession = true;
-            //IWebDriver ieDriver = new InternetExplorerDriver(ieoptions);
-            //ieDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
-            //return ieDriver;
         }
     }
 }

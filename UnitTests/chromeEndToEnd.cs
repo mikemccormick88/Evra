@@ -2,8 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace UnitTests
 {
@@ -15,9 +13,8 @@ namespace UnitTests
         public void chromeEndToEndTest()
         {
             Boolean pass = false;
-            IWebDriver driver = new ChromeDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
+            IWebDriver driver = program.getDriver("Chrome", 20);
             program.endToEnd(driver);
             //check test passes
             if (program.ElementExists(driver, "Id", "property-section"))

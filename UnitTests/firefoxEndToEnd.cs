@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EvraAutomatedTests;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 
 namespace UnitTests
 {
@@ -14,9 +13,8 @@ namespace UnitTests
         public void firefoxEndToEndTest()
         {
             Boolean pass = false;
-            IWebDriver driver = new FirefoxDriver();
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(20);
             Program program = new Program();
+            IWebDriver driver = program.getDriver("Firefox", 20);
             program.endToEnd(driver);
             //check test passes
             if (program.ElementExists(driver, "Id", "property-section"))

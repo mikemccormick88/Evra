@@ -4,6 +4,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
+using System.IO;
 
 namespace EvraAutomatedTests
 {
@@ -109,49 +110,49 @@ namespace EvraAutomatedTests
         public Boolean ElementExists(IWebDriver driver, string identifier, string search)
         {
             Boolean exists = false;
-            if (identifier == "CssSelector")
+            if (identifier.ToUpper() == "CSSSELECTOR")
             {
                 if (driver.FindElements(By.CssSelector(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "Id")
+            else if (identifier.ToUpper() == "ID")
             {
                 if (driver.FindElements(By.Id(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "XPath")
+            else if (identifier.ToUpper() == "XPATH")
             {
                 if (driver.FindElements(By.XPath(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "LinkText")
+            else if (identifier.ToUpper() == "LINKTEXT")
             {
                 if (driver.FindElements(By.LinkText(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "Name")
+            else if (identifier.ToUpper() == "NAME")
             {
                 if (driver.FindElements(By.Name(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "ClassName")
+            else if (identifier.ToUpper() == "CLASSNAME")
             {
                 if (driver.FindElements(By.ClassName(search)).Count() != 0)
                 {
                     exists = true;
                 }
             }
-            else if (identifier == "TagName")
+            else if (identifier.ToUpper() == "TAGNAME")
             {
                 if (driver.FindElements(By.TagName(search)).Count() != 0)
                 {
@@ -188,6 +189,48 @@ namespace EvraAutomatedTests
             Screenshot image = ((ITakesScreenshot)driver).GetScreenshot();
             System.IO.Directory.CreateDirectory(fileDir + "FailedTests\\" + folder + "\\");
             image.SaveAsFile(fileDir + "FailedTests\\" + folder + "\\" + filename + ".png", ScreenshotImageFormat.Png);
+        }
+
+        public int getValuation (IWebDriver driver)
+        {
+            IWebElement element = driver.FindElement(By.XPath("//*[@id='property-section']"));
+            string html = element.GetAttribute("innerHTML");
+            html = html.Substring(html.IndexOf('$') + 2, 10);
+            int valuation = Int32.Parse(html.Replace(",", ""));
+            return valuation;
+        }
+
+        public IWebDriver getDriver(string browser, int wait)
+        {
+            if (browser.ToUpper() == "CHROME")
+            {
+                ChromeOptions options = new ChromeOptions();
+                options.AddUserProfilePreference("download.default_directory", @"C:\\temp\\Evra\\Downloads");
+                IWebDriver chromeDriver = new ChromeDriver(options);
+                chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(wait);
+                return chromeDriver;
+            }
+            else if (browser.ToUpper() == "FIREFOX")
+            {
+                IWebDriver firefoxDriver = new FirefoxDriver();
+                firefoxDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(wait);
+                return firefoxDriver;
+            }
+            else if (browser.ToUpper() == "IE")
+            {
+                InternetExplorerOptions ieoptions = new InternetExplorerOptions();
+                //causes exception when zoom settings are inconsistent
+                ieoptions.IgnoreZoomLevel = true;
+                //stop login page being redirected to search page in explorer
+                ieoptions.EnsureCleanSession = true;
+                IWebDriver ieDriver = new InternetExplorerDriver(ieoptions);
+                ieDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(wait);
+                return ieDriver;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
